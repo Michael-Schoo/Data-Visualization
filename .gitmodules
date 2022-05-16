@@ -1,0 +1,3 @@
+[submodule "awesome-public-datasets"]
+	path = awesome-public-datasets
+	url = https://github.com/awesomedata/awesome-public-datasets.git
