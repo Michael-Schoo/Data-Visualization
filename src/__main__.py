@@ -9,8 +9,17 @@ print("HI")
 
 # print(get_data.GetData().get_data())
 data = get_data.GetData().get_data()
-for d in data:
-    print(d.get_raw_data())
+for d in data: 
+    if d.Age >0: 
+        d.Name
+list = ["yes" if d.Age > 0 else "no"+d.Name for d in data]
+#print(list)
+
+print("data:")
+print(data)
+input()
+
+
 
 # make graph using matplotlib
 # plt.plot([d.PassengerId for d in data])
@@ -30,3 +39,4 @@ plt.legend()
 plt.show()
 
 print(data.__len__())
+

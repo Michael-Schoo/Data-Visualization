@@ -3,7 +3,8 @@ from os.path import exists
 import csv
 
 # PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
-class TitanicType(dict):
+class TitanicType():
+
     PassengerId: int
     Survived: int
     Pclass: int
@@ -16,46 +17,48 @@ class TitanicType(dict):
     Fare: float
     Cabin: str
     Embarked: str
-    def get_raw_data(self):
-        temp_dict = {
-            "PassengerId": self.PassengerId,
-            "Survived": self.Survived,
-            "Pclass": self.Pclass,
-            "Name": self.Name,
-            "Sex": self.Sex,
-            "Age": self.Age,
-            'SibSp': self.SibSp,
-            "Parch": self.Parch,
-            "Ticket": self.Ticket,
-            "Fare": self.Fare,
-            "Cabin": self.Cabin,
-            "Embarked": self.Embarked
-        }
-        return temp_dict
+    def __init__(self):
+        self.Pclass = 0
 
-  # no suggestion here
+
+    # def __str__(self) -> str:
+    #     return "PassengerId: " + str(self.PassengerId) + '\n' + "Survived: " + str(self.Survived)  + '\n' + "Pclass: " + str(self.Pclass)  + '\n' + "Name: " + self.Name  + '\n' + "Sex: " + str(self.Sex)  + '\n' + "Age: " + str(self.Age)  + '\n' + 'SibSp' + str(self.SibSp)  + '\n' + "Parch: " + str(self.Parch)  + '\n' + "Ticket: " + (self.Ticket)  + '\n' +  "Fare: " + str(self.Fare)  + '\n' + "Cabin: " + str(self.Cabin)  + '\n' + "Embarked: " + str(self.Embarked) + '\n'
+    #     return temp_dict
+
+
 class GetData:
+    """
+    The class that gets the data from the csv file
+    """
     def __init__(self):
         self.data = []
         self.file_name = "data.csv"
-    
-    def get_data(self):
+
+    def get_data(self) -> list[TitanicType]:
+        """
+        The actual function that gets the data from the csv file
+        """
             
         file_exists = exists("./awesome-public-datasets/Datasets/titanic.csv/titanic.csv")
 
         if not file_exists:
-            raise Exception("File not found (uncompress the dataset and try again)")
+            raise Exception("File not found (decompress the dataset and try again)")
 
-        dictionary: list[TitanicType] = []
+        list: list[TitanicType] = []
 
         with open('./awesome-public-datasets/Datasets/titanic.csv/titanic.csv', mode='r') as data:
-            reader = csv.reader(data)
             # dict_from_csv = {rows[0]:rows[11] for rows in reader}
-            for line in csv.reader(data):
-                if line[0] == 'PassengerId':
+            for index, line in enumerate(csv.reader(data)):
+                
+                # option 1:
+                if index == 0: continue
+                
+                # option 2:
+                if index == 0: 
                     continue
                 
                 tmp_dict = TitanicType()
+                print(tmp_dict.__dict__, tmp_dict.Pclass)
                 tmp_dict.PassengerId = int(line[0])
                 tmp_dict.Survived = int(line[1])
                 tmp_dict.Pclass = int(line[2])
@@ -68,8 +71,10 @@ class GetData:
                 tmp_dict.Fare = float(line[9])
                 tmp_dict.Cabin = str(line[10] or "")
                 tmp_dict.Embarked = str(line[11] or "")
-                dictionary.append(tmp_dict)
+                print(tmp_dict.__dict__, tmp_dict.Pclass)
+                print(tmp_dict)
+                list.append(tmp_dict)
 
-            
-        # print(dict_from_csv)
-        return dictionary
+        print("inside loop")
+        print(list)
+        return list
