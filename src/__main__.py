@@ -20,6 +20,10 @@ better_data_klax = simplify_us_data(raw_us_data.klax)
 print("simplified US data!")
 
 
+#### Set up Matplotlib ####
+plt.figure(figsize = (7, 9))
+plt.suptitle("Is there a corelation of weather due to La Niña?", y= 0.965,fontweight="bold", fontsize=16)
+
 #### Temperature plot ####
 plt.subplot(2, 1, 1)
 
@@ -48,7 +52,7 @@ plt.legend(handles=[plot1, plot2], loc="upper left")
 
 #### Precipitation plot ###
 plt.subplot(2, 1, 2)
-plt.subplots_adjust(hspace=1)
+plt.subplots_adjust(hspace=0.5)
 
 # set basic data
 plt.title("Rainfall across places")
@@ -73,7 +77,8 @@ plt.xlabel("Date")
 plt.legend(handles=[plot1, plot2], loc="upper left")
 
 
-### Showing the plot ###
+### Showing/saving the plot ###
 print("showing plot...")
+plt.savefig("current_graph.png")
 plt.show()
 print("shown plot!")

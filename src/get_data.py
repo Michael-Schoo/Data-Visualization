@@ -32,7 +32,6 @@ class GetData:
                 observation.air_temp_set_1 = float(row[2] or 0)
                 observation.precip_accum_one_hour_set_1 = row[3]
                 row.append(0)
-                print(row[3], row[4])
                 observation.precip_accum_24_hour_set_1 = row[4] or (float(row[3] or 0) / 535) or 0
 
                 observed_data.append(observation)
