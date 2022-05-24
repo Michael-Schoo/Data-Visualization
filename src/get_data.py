@@ -1,3 +1,4 @@
+import codecs
 import csv
 from data_types import BomData, BomObservation, BomObservation, USWeather, USWeatherObservation
 
@@ -17,7 +18,7 @@ class GetData:
 
         us_2021_weather = USWeather()
         # gets all the observations from the csv file
-        us_2021_weather_data_klax = open("./data/us-2021/KLAX.2021-12-31.csv", "r")
+        us_2021_weather_data_klax = codecs.open("./data/us-2021/KLAX.2021-12-31.csv", 'r', encoding='utf-8', errors='ignore')
         cities = [us_2021_weather_data_klax]
 
         for city_data in cities:
@@ -60,8 +61,7 @@ class GetData:
                     elif year == 2020 and month > 5:
                         break
 
-
-                    data = open(f"./data/bom/{city}/{city}-{year}{'%02d' % month}.csv", "r")
+                    data = codecs.open(f"./data/bom/{city}/{city}-{year}{'%02d' % month}.csv", 'r', encoding='utf-8', errors='ignore')
 
                     for index, row in enumerate(csv.reader(data)):
                         # skip header
