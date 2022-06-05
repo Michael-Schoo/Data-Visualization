@@ -6,11 +6,14 @@ from data_types import BomObservation, NewBetterObservation, USWeatherObservatio
 
 def simplify_us_data(data: list[USWeatherObservation]) -> list[NewBetterObservation]:
     """
-    Function that gets averages for each month
+    Function that gets averages for each month **FOR US DATA**
     """
 
     # get averages
     sorted_data: dict[tuple[int, int], list[float]] = {}
+
+    # Make the new list that will contain the averages
+    new_data: list[NewBetterObservation] = []
 
     for entry in data:
         # remove outliers (temp and rain)
@@ -19,19 +22,21 @@ def simplify_us_data(data: list[USWeatherObservation]) -> list[NewBetterObservat
 
         if (float(space_is_null(entry.precip_accum_24_hour_set_1) or 0) > 100 or float(space_is_null(entry.precip_accum_24_hour_set_1) or 0) < 0):
             continue
-
+        
+        # Get the date out of a string (from )
         date = date_parse(entry.date_time)
         
+        # Find the month and year in the dict and append (otherwise make it)
         if sorted_data.keys().__contains__((date.year, date.month)):
             sorted_data[(date.year, date.month)].append(entry)
         else:
             sorted_data[(date.year, date.month)] = [entry]
-
-    new_data: list[NewBetterObservation] = []
-
+    
+    # Go through the months of data data and get the averages for them
     for month in sorted_data:
         data = [data for data in sorted_data[month]]
 
+        # If there is no data for the month, skip it
         if not data or len(data) < 0:
             continue
 
@@ -54,6 +59,7 @@ def simplify_bom_data(data: list[BomObservation]) -> list[NewBetterObservation]:
     # get averages
     sorted_data: dict[tuple[int, int], list[float]] = {}
 
+    # Make the new list that will contain the averages
     new_data: list[BomObservation] = []
 
     for entry in data:
@@ -67,14 +73,17 @@ def simplify_bom_data(data: list[BomObservation]) -> list[NewBetterObservation]:
 
         date = datetime.strptime(entry.date, "%d/%m/%Y")
 
+        # Find the month and year in the dict and append (otherwise make it)
         if sorted_data.keys().__contains__((date.year, date.month)):
             sorted_data[(date.year, date.month)].append(entry)
         else:
             sorted_data[(date.year, date.month)] = [entry]
 
+    # Go through the months of data data and get the averages for them
     for month in sorted_data:
         data = [data for data in sorted_data[month]]
 
+        # If there is no data for the month, skip it
         if not data:
             continue
 

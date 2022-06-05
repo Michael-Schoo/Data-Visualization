@@ -1,6 +1,9 @@
 
 
 class BomObservation:
+    """
+    Class that represents a single observation from the BOM (bom.gov.au)
+    """
     station_name: str = "BATCHELOR AERO"
     date: str = "1/02/2009"
     # 0000-2400 (mm)
@@ -24,6 +27,9 @@ class BomObservation:
 
 
 class USWeatherObservation:
+    """
+    Class that represents a single observation from the US Weather (weather.gov - synopticdata.org )
+    """
     station_id: str = "KLAX"
     date_time: str = "2021-01-01T12:00:00Z"
     # Celsius
@@ -35,6 +41,9 @@ class USWeatherObservation:
 
 
 class NewBetterObservation:
+    """
+    Class that represents a single observation from the any data source
+    """
     month: int = 1
     year: int = 2020
     # The acuminated rain through out the month (mm)
@@ -44,8 +53,14 @@ class NewBetterObservation:
 
 
 class BomData:
+    """
+    Class that represents the data lists from the BOM
+    """
     brisbane: list[BomObservation] = []
 
 
 class USWeather:
-    klax: list[USWeatherObservation] = []
+    """
+    Class that represents the data lists from the US Weather
+    """
+    kmlb: list[USWeatherObservation] = []

@@ -5,10 +5,11 @@ from data_types import BomData, BomObservation, BomObservation, USWeather, USWea
 
 class GetData:
     """
-    The class that gets the data from the csv file
+    The class that gets the data from the csv file(s)
     """
 
     def __init__(self):
+        # Doesn't actually do much
         pass
 
     def get_us_2021_weather(self) -> USWeather:
@@ -18,9 +19,10 @@ class GetData:
 
         us_2021_weather = USWeather()
         # gets all the observations from the csv file
-        us_2021_weather_data_klax = codecs.open("./data/us-2021/KLAX.2021-12-31.csv", 'r', encoding='utf-8', errors='ignore')
-        cities = [us_2021_weather_data_klax]
+        us_2021_weather_data_kmlb = codecs.open("./data/us-2021/KMLB.2015-12-31.csv", 'r', encoding='utf-8', errors='ignore')
+        cities = [us_2021_weather_data_kmlb]
 
+        # go through each city and get their data
         for city_data in cities:
             observed_data = []
             for index, row in enumerate(csv.reader(city_data)):
@@ -35,11 +37,14 @@ class GetData:
                 row.append(0)
                 observation.precip_accum_24_hour_set_1 = row[4] or (float(row[3] or 0) / 535) or 0
 
+                # append the observation to the list
                 observed_data.append(observation)
 
-            if city_data.name == us_2021_weather_data_klax.name:
-                us_2021_weather.klax = observed_data
+            # find which source it is, and then add the observation to the list
+            if city_data.name == us_2021_weather_data_kmlb.name:
+                us_2021_weather.kmlb = observed_data
 
+        # finally return the data
         return us_2021_weather
 
     def get_bom_weather(self) -> BomData:
@@ -51,14 +56,21 @@ class GetData:
         # gets all the observations from the csv file
         cities = ["brisbane"]
 
+        # sets the years to be observed
+        min_year, max_year = 2010, 2011
+
+        # go through each city and get their data
         for city in cities:
             observed_data = []
-            for year in range(2019, 2021):
-                for month in range(1, 13):
+            # go through the years to collect the data
+            for year in range(min_year, max_year+1):
+                for month in range(1, 12+1):
 
-                    if year == 2019 and month < 6:
-                        continue
-                    elif year == 2020 and month > 5:
+                    # skip the first 6 months
+                    if year == min_year and month < 6:
+                        continue 
+                    # skip the last 6 months
+                    elif year == max_year and month > 5:
                         break
 
                     data = codecs.open(f"./data/bom/{city}/{city}-{year}{'%02d' % month}.csv", 'r', encoding='utf-8', errors='ignore')
@@ -80,9 +92,12 @@ class GetData:
                         observation.average_10m_wind_speed = row[9] or 0
                         observation.solar_radiation = row[10] or 0
 
+                        # append the observation to the list
                         observed_data.append(observation)
 
+            # find which source it is, and then add the observation to the list
             if city == "brisbane":
                 bom_weather.brisbane = observed_data
-
+        
+        # finally return the data
         return bom_weather
