@@ -19,7 +19,7 @@ class GetData:
 
         us_2021_weather = USWeather()
         # gets all the observations from the csv file
-        us_2021_weather_data_kmlb = codecs.open("./data/us-2021/KMLB.2015-12-31.csv", 'r', encoding='utf-8', errors='ignore')
+        us_2021_weather_data_kmlb = codecs.open("./data/us-2021/KMLB.2021-12-31.csv", 'r', encoding='utf-8', errors='ignore')
         cities = [us_2021_weather_data_kmlb]
 
         # go through each city and get their data
@@ -57,7 +57,7 @@ class GetData:
         cities = ["brisbane"]
 
         # sets the years to be observed
-        min_year, max_year = 2010, 2011
+        min_year, max_year = 2021, 2022
 
         # go through each city and get their data
         for city in cities:
