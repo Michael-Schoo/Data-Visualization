@@ -1,28 +1,28 @@
 import matplotlib.pyplot as plt
 from clean_data import simplify_bom_data, simplify_us_data
-from get_data import GetData
+from get_data import get_bom_weather, get_us_weather
 
 
 #### Retrieving & Manipulating the data ####
 # Getting data
 print("getting data...")
-raw_bom_data = GetData().get_bom_weather()
+raw_bom_data = get_bom_weather()
 print("gotten BOM data!")
-raw_us_data = GetData().get_us_2021_weather()
+raw_us_data = get_us_weather()
 print("gotten US data!")
 
 # Cleaning data (making it into monthly and removing the outliers)
-print("simplifing DOM data...")
+print("simplifying DOM data...")
 better_data_bris = simplify_bom_data(raw_bom_data.brisbane)
 print("simplified BOM data!")
-print("simplifing US data...")
+print("simplifying US data...")
 better_data_kmlb = simplify_us_data(raw_us_data.kmlb)
 print("simplified US data!")
 
 
 #### Set up Matplotlib ####
 plt.figure(figsize = (7, 9))
-plt.suptitle("Is there a corelation of weather due to the cycles?", y= 0.965, fontweight="bold", fontsize=16)
+plt.suptitle("Is there a corelation of weather across places?", y=0.965, fontweight="bold", fontsize=16)
 
 #### Temperature plot ####
 plt.subplot(2, 1, 1)
@@ -81,4 +81,4 @@ plt.legend(handles=[plot1, plot2], loc="upper left")
 print("showing plot...")
 plt.savefig("current_graph.png")
 plt.show()
-print("shown plot!")
+print("shown and saved plot!")

@@ -17,10 +17,10 @@ def simplify_us_data(data: list[USWeatherObservation]) -> list[NewBetterObservat
 
     for entry in data:
         # remove outliers (temp and rain)
-        if (float(space_is_null(entry.air_temp_set_1) or 0) > 60 or float(space_is_null(entry.air_temp_set_1) or 0) < -5):
+        if (float(space_is_null(entry.air_temp_set_1) or 0) > 50 or float(space_is_null(entry.air_temp_set_1) or 0) < -5):
             continue
 
-        if (float(space_is_null(entry.precip_accum_24_hour_set_1) or 0) > 100 or float(space_is_null(entry.precip_accum_24_hour_set_1) or 0) < 0):
+        if (float(space_is_null(entry.precip_accum_24_hour_set_1) or 0) > 50 or float(space_is_null(entry.precip_accum_24_hour_set_1) or 0) < 0):
             continue
         
         # Get the date out of a string (from )
@@ -65,7 +65,7 @@ def simplify_bom_data(data: list[BomObservation]) -> list[NewBetterObservation]:
     for entry in data:
 
         # remove outliers (temp and rain)
-        if (float(space_is_null(entry.maximum_temperature) or 0) > 60 or float(space_is_null(entry.minimum_temperature) or 0) < -10):
+        if (float(space_is_null(entry.maximum_temperature) or 0) > 50 or float(space_is_null(entry.minimum_temperature) or 0) < -5):
             continue
 
         if (float(space_is_null(entry.rain) or 0) > 50 or float(space_is_null(entry.rain) or 0) < 0):
